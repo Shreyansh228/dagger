@@ -9,6 +9,7 @@ import org.apache.flink.api.common.typeinfo.PrimitiveArrayTypeInfo;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.api.java.typeutils.ObjectArrayTypeInfo;
+import org.apache.flink.api.java.typeutils.RowTypeInfo;
 import org.apache.flink.api.java.typeutils.TypeExtractor;
 import org.apache.flink.formats.json.JsonRowSerializationSchema;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -86,7 +87,7 @@ public class ToJsonTransformer extends RichMapFunction<Row, Row> implements Seri
                     i,
                     types);
         }
-        return Types.ROW_NAMED(fieldNames,types);
+        return new RowTypeInfo(types,fieldNames);
     }
 
     private static TypeInformation<?>[] getRowSchema(TypeInformation<?> info, Object value, int index, TypeInformation<?>[] types) {
